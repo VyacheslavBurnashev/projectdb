@@ -1,11 +1,9 @@
---1
-/*создание таблицы тип видеозаписи*/
 create table type (type_id number,
 type varchar2(20) not null,
 constraint pk_type_id PRIMARY KEY(type_id));
 
 Create sequence type_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_type_id
     before insert on type
      for each row
@@ -14,18 +12,18 @@ create trigger trg_type_id
       into :new.type_id
        from dual;
     end;
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)
+
 insert into type (type)
 select distinct type from netflix_csv;*/
 
 --2
-/*создание таблицы Директора*/
+/*СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ Р”РёСЂРµРєС‚РѕСЂР°*/
 create table director (id_director number,
 Name varchar2(200) not null,
 constraint pk_id_director PRIMARY KEY(id_director));
 
 Create sequence director_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_id_director
     before insert on director
      for each row
@@ -34,7 +32,7 @@ create trigger trg_id_director
       into :new.id_director
        from dual;
     end;
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)
+
 
 
 insert into director (name)
@@ -44,11 +42,11 @@ select distinct regexp_substr(director, '[^,]+', 1, level) director
   from tt
   connect by regexp_substr(director, '[^,]+', 1, level) is not null
          and rn = prior rn
-         and prior dbms_random.value is not null
+         and prior dbms_random.value is not null;
          
        
 update director
-set name=ltrim(name)
+set name=ltrim(name);
 
 delete from director where id_director in (
 select min(id_director)
@@ -57,16 +55,16 @@ where exists (
 select *
 from director t2
 where ( (t1.name = t2.name) and (t1.id_director != t2.id_director) )
-) group by name)*/
+) group by name);
 
 --3
-/*создание таблицы Актеры*/
+/*СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РђРєС‚РµСЂС‹*/
 create table cast (id_cast number,
 Name varchar2(200) not null,
 constraint pk_id_cast PRIMARY KEY(id_cast));
 
 Create sequence cast_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_id_cast
     before insert on cast
      for each row
@@ -75,7 +73,7 @@ create trigger trg_id_cast
       into :new.id_cast
        from dual;
     end;
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)
+
 
 
 insert into cast (name)
@@ -85,11 +83,11 @@ select distinct regexp_substr(cast, '[^,]+', 1, level) cast
   from tt
   connect by regexp_substr(cast, '[^,]+', 1, level) is not null
          and rn = prior rn
-         and prior dbms_random.value is not null
+         and prior dbms_random.value is not null;
          
        
 update cast
-set name=ltrim(name)
+set name=ltrim(name);
 
 delete from cast where id_cast in (
 select min(id_cast)
@@ -98,16 +96,16 @@ where exists (
 select *
 from cast t2
 where ( (t1.name = t2.name) and (t1.id_cast != t2.id_cast) )
-) group by name)*/
+) group by name);
 
 --4
-/*создание таблицы Страны*/
+/*СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РЎС‚СЂР°РЅС‹*/
 create table country (id_country number,
 country varchar2(200) not null,
 constraint pk_id_country PRIMARY KEY(id_country));
 
 Create sequence country_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_id_country
     before insert on country
      for each row
@@ -116,7 +114,7 @@ create trigger trg_id_country
       into :new.id_country
        from dual;
     end;
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)
+
 
 
 insert into country (country)
@@ -126,11 +124,11 @@ select distinct regexp_substr(country, '[^,]+', 1, level) country
   from tt
   connect by regexp_substr(country, '[^,]+', 1, level) is not null
          and rn = prior rn
-         and prior dbms_random.value is not null
+         and prior dbms_random.value is not null;
          
        
 update country
-set country=ltrim(country)
+set country=ltrim(country);
 
 delete from country where id_country in (
 select min(id_country)
@@ -139,16 +137,16 @@ where exists (
 select *
 from country t2
 where ( (t1.country = t2.country) and (t1.id_country != t2.id_country) )
-) group by country)*/
+) group by country);
 
 --5
-/*создание таблицы Рейтинг MPAA*/
+/*СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ Р РµР№С‚РёРЅРі MPAA*/
 create table rating (id_rating number,
 rating varchar2(100) not null,
 constraint pk_id_rating PRIMARY KEY(id_rating));
 
 Create sequence rating_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_id_rating
     before insert on rating
      for each row
@@ -157,20 +155,19 @@ create trigger trg_id_rating
       into :new.id_rating
        from dual;
     end;
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)
 
 insert into rating (rating)
 select distinct rating from netflix_csv where rating is not null;
-*/
+
 
 --6
-/*создание таблицы Список*/
+/*СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РЎРїРёСЃРѕРє*/
 create table list (id_list number,
 list varchar2(100) not null,
 constraint pk_id_list PRIMARY KEY(id_list));
 
 Create sequence list_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_id_list
     before insert on list
      for each row
@@ -179,7 +176,7 @@ create trigger trg_id_list
       into :new.id_list
        from dual;
     end;
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)
+
 insert into list (list)
 with t as (select listed_in from netflix_csv where listed_in is not null union all select listed_in from netflix_csv where listed_in is not null),
     tt as (select rownum as rn, listed_in from t)
@@ -187,11 +184,11 @@ select distinct regexp_substr(listed_in, '[^,]+', 1, level) listed_in
   from tt
   connect by regexp_substr(listed_in, '[^,]+', 1, level) is not null
          and rn = prior rn
-         and prior dbms_random.value is not null
+         and prior dbms_random.value is not null;
          
        
 update list
-set list=ltrim(list)
+set list=ltrim(list);
 
 delete from list where id_list in (
 select min(id_list)
@@ -200,14 +197,13 @@ where exists (
 select *
 from list t2
 where ( (t1.list = t2.list) and (t1.id_list != t2.id_list) )
-) group by list)
+) group by list);
 
 
-*/
 
 
 --7
-/*создание таблицы Фильмы*/
+
 create table movies (id number,
 show_id varchar2(10),
 type_id number,
@@ -227,7 +223,7 @@ CONSTRAINT fk_rating
     REFERENCES rating(id_rating));
 
 Create sequence movies_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_id_movies
     before insert on movies
      for each row
@@ -237,17 +233,17 @@ create trigger trg_id_movies
        from dual;
     end;
     
-    /*создание триггера на проверку корректности заполнения поля release_year*/
+    /*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° РїСЂРѕРІРµСЂРєСѓ РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё Р·Р°РїРѕР»РЅРµРЅРёСЏ РїРѕР»СЏ release_year*/
 create trigger trg_release_year_movies
     before insert or update on movies
      for each row
    begin
    if not (preobraz.check_year(:NEW.release_year))
-   then raise_application_error(-20001, 'Неправильный формат, введите год yyyy');
+   then raise_application_error(-20001, 'Incorrect, type yyyy');
    end if;
     end;
 
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)    
+/Р—Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹ РёР· РґР°РЅРЅС‹С… csv (РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ Р·Р°РіСЂСѓР¶РµРЅС‹ РІ С‚Р°Р±Р»РёС†Сѓ netflix_csv)    
 insert into movies (show_id,type_id,title,date_added,release_year,id_rating, duration,description)
 select show_id,
 (select type_id from type where type=ns.type),
@@ -262,7 +258,7 @@ from netflix_csv ns;
 */
 
 --8
-/*создание таблицы Актеры-фильмы*/
+/*СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РђРєС‚РµСЂС‹-С„РёР»СЊРјС‹*/
 create table cast_movies (id number,
 id_cast number,
 id_movies number,
@@ -275,7 +271,7 @@ CONSTRAINT fk_cast
     REFERENCES movies(id));
 
 Create sequence cast_movies_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_id_cast_movies
     before insert on cast_movies
      for each row
@@ -284,13 +280,11 @@ create trigger trg_id_cast_movies
       into :new.id
        from dual;
     end;
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)
-insert into cast_movies (id_cast,id_movies)
-select c.id_cast,m.id from cast c 
-,netflix_csv ns,movies m where ns.show_id=m.show_id and ns.cast like '%' || c.name || '%';*/
+Р—Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹ РёР· РґР°РЅРЅС‹С… csv (РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ Р·Р°РіСЂСѓР¶РµРЅС‹ РІ С‚Р°Р±Р»РёС†Сѓ netflix_csv)
+*/
 
 --9
-/*создание таблицы Директор-фильмы*/
+/*СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ Р”РёСЂРµРєС‚РѕСЂ-С„РёР»СЊРјС‹*/
 create table director_movies (id number,
 id_director number,
 id_movies number,
@@ -303,7 +297,7 @@ CONSTRAINT fk_director
     REFERENCES movies(id));
 
 Create sequence director_movies_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_id_director_movies
     before insert on director_movies
      for each row
@@ -311,14 +305,13 @@ create trigger trg_id_director_movies
      select director_movies_sequence.nextval
       into :new.id
        from dual;
-    end;
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)
+    end;*Р—Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹ РёР· РґР°РЅРЅС‹С… csv (РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ Р·Р°РіСЂСѓР¶РµРЅС‹ РІ С‚Р°Р±Р»РёС†Сѓ netflix_csv)
 insert into director_movies (id_director,id_movies)
 select d.id_director,m.id from director d 
 ,netflix_csv ns,movies m where ns.show_id=m.show_id and ns.director like '%' || d.name || '%';*/
 
 --10
-/*создание таблицы Страна-фильмы*/
+/*СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РЎС‚СЂР°РЅР°-С„РёР»СЊРјС‹*/
 create table country_movies (id number,
 id_country number,
 id_movies number,
@@ -331,7 +324,7 @@ CONSTRAINT fk_country
     REFERENCES movies(id));
 
 Create sequence country_movies_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_id_country_movies
     before insert on country_movies
      for each row
@@ -340,14 +333,14 @@ create trigger trg_id_country_movies
       into :new.id
        from dual;
     end;
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)
+Р—Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹ РёР· РґР°РЅРЅС‹С… csv (РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ Р·Р°РіСЂСѓР¶РµРЅС‹ РІ С‚Р°Р±Р»РёС†Сѓ netflix_csv)
 insert into country_movies (id_country,id_movies)
 select c.id_country,m.id from country c 
 ,netflix_csv ns,movies m where ns.show_id=m.show_id and ns.country like '%' || c.country || '%';*/
          
        
 --11
-/*создание таблицы Списки-фильмы*/
+/*СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РЎРїРёСЃРєРё-С„РёР»СЊРјС‹*/
 create table list_movies (id number,
 id_list number,
 id_movies number,
@@ -360,7 +353,7 @@ CONSTRAINT fk_list
     REFERENCES movies(id));
 
 Create sequence list_movies_sequence;
-/*создание триггера на автоматическое заполнение id*/
+/*СЃРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° РЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ id*/
 create trigger trg_id_list_movies
     before insert on list_movies
      for each row
@@ -369,7 +362,7 @@ create trigger trg_id_list_movies
       into :new.id
        from dual;
     end;
-/*Заполнение таблицы из данных csv (предварительно загружены в таблицу netflix_csv)
+Р—Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹ РёР· РґР°РЅРЅС‹С… csv (РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ Р·Р°РіСЂСѓР¶РµРЅС‹ РІ С‚Р°Р±Р»РёС†Сѓ netflix_csv)
 insert into list_movies (id_list,id_movies)
 select l.id_list,m.id from list l 
 ,netflix_csv ns,movies m where ns.show_id=m.show_id and ns.listed_in = l.list;
@@ -385,7 +378,7 @@ select l.id_list,m.id from list l
 truncate table list_movies
 */
 
---12 создание таблицы для хранения информации о том, какие люди являются директорами и актерами в фильмах, заполняем процедурой cast_director_ins
+--12 СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С‚РѕРј, РєР°РєРёРµ Р»СЋРґРё СЏРІР»СЏСЋС‚СЃСЏ РґРёСЂРµРєС‚РѕСЂР°РјРё Рё Р°РєС‚РµСЂР°РјРё РІ С„РёР»СЊРјР°С…, Р·Р°РїРѕР»РЅСЏРµРј РїСЂРѕС†РµРґСѓСЂРѕР№ cast_director_ins
 
 create table cast_director_tbl (id_cast number,
 id_director number,
